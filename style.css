@@ -1,0 +1,341 @@
+* {
+    margin: 0px;
+    padding: 0px;
+    -ms-overflow-style: none;  /* Hide scrollbar for IE and Edge */
+    scrollbar-width: none;  /* Hide scrollbar for Firefox */
+    font-family: 'Poppins', sans-serif;
+    box-sizing: border-box;
+}
+body::-webkit-scrollbar {
+    display: none;
+}
+body {
+    display: flex;
+    flex-flow: row wrap;
+    align-items: center;
+    background-color: black;
+}
+.groundLevel {
+    position: fixed;
+    z-index: -1;
+    background-color: black;
+    height: 100%;
+    width: 100%;
+    transform: translate(-50%, -50%);
+    top: 50%;
+    left: 50%;
+}
+.navBarSensor {
+    width: 100%;
+    height: 50px;
+    position: fixed;
+    z-index: 9;
+    top: 0px;
+    background-color: transparent;
+}
+.navBar{
+    height: 50px;
+    width: 100%;
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+    background-color: beige;
+    margin-bottom: 30px;
+    justify-content: space-between;
+    box-sizing: border-box;
+    padding: 0px 20px;
+    position: fixed;
+    top: -50px;
+    left: 0;
+    z-index: 10;
+}
+.x-menu {
+    display: block;
+    position: absolute;
+    top: 20px;
+    right: 20px;
+}
+.ham-menu {
+    display: block;
+    padding: 0px 0px 0px 0px;
+}
+.navBarLogo {
+    height: 80%;
+}
+.catstagram {
+    font-weight: 600;
+    font-size: 120%;
+    height: 50px;
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+    gap: 10px;
+}
+.navBarMenuUL {
+    
+    display: flex;
+    flex-flow: column nowrap;
+    position: fixed;
+    top: 0;
+    right: -100%;
+    height: 100vh;
+    width: 80vw;
+    overflow: auto;
+    background-color: beige;
+    list-style-type: none;
+    gap: 10px;
+    padding: 40px 0px 0px 0px;
+    font-weight: 400;
+    font-size: 100%;
+    line-height: 2;
+    transition: right 0.3s; /* all */
+}
+.slideToLeft {
+    right: 0;
+}
+.navBarMenu1, .navBarMenu2, .navBarMenu3 {
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 110%;
+    padding-left: 25px;
+}
+.navBarMenuItems1, .navBarMenuItems2 {
+    width: 100%;
+    height: auto;
+    padding: 0px 5px 0px 30px;
+    line-height: 1.5;
+    gap: 10px;
+    font-weight: 400;
+    font-size: 110%;
+}
+.items3  {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-evenly;
+    padding: 0px 0px 180px 10px;
+    gap: 10px;
+    font-weight: 300;
+}
+.closeBtn {
+    display: none;
+}
+.sigma {
+    display: flex;
+    height: 30px;
+    gap: 5px;
+}
+.weblinks {
+    text-decoration: 1px dotted underline;
+    color: grey;
+}
+.catImgContainer {
+    /* border: 1px dotted red; */
+    display:flex;
+    width: 300px;
+    height: 300px;
+    background-position: center;
+    background-repeat: no-repeat;
+    /* background-size: 100% auto; */
+    background-size: cover;
+    
+    opacity: 1;
+    margin: 0px 0px 30px 0px;
+    border-radius: 15px;
+    position: relative;
+    cursor: pointer;
+}
+.catImgContainer:hover {
+    opacity: 1;
+}
+.catAllContainer{
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-evenly;
+    margin-top: 80px;
+    height: 100%;
+}
+.freezeScroll {
+    height: 100%;
+    overflow: hidden;
+}
+.catInfoBox {
+    position: fixed;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
+    list-style-type: none;
+    background-color: beige;
+    transform: translate(-50%, -50%);
+    width: 100vw;   /* 100vw */
+    height: 100vh;
+    top: 50%;
+    left: 50%;
+    z-index: -2; /* 8 */
+    opacity: 0.5;
+    transition: opacity 1.0s ease-out;
+    /* transition: width 0.3s ease-in-out; */
+    /* transition: height 0.3s ease-in-out; */
+    /* transition: width 2s, height 4s; */
+}
+.catInfoBoxToggle{
+    z-index: 8;
+    /* width: 95%; */
+    /* height: 85vh; */
+    padding: 10px 0px 10px 10px;
+    opacity: 1;
+}
+.infoBoxImgDiv { /* for portrait view */
+    width: 350px;
+    height: auto;
+    object-fit: contain;
+}
+.infoBoxImg {
+    width: 100%;
+    height: 100%;
+}
+.infoBoxUL {
+    /* width: auto; */
+    max-height: 90%;
+    width: auto;
+    overflow: auto;
+    list-style-type: none;
+    /* border: 1px dotted red; */
+}
+
+h4 {
+    font-size: 18px;
+    font-weight: 400;
+    padding: 0px 10px 0px 10px;
+    line-height: 2;
+    /* width: auto; */
+}
+h1 {
+    font-weight: 400;
+    padding: 0px 10px;
+}
+.infoBoxBackground {
+    display: none;
+    background-color: black;
+    opacity: 0.7;
+    width: 100vw;
+    height: 150%;
+    overflow-y: hidden;
+    position: fixed;
+    transform: translate(-50%, -50%);
+    top: 50%;
+    left: 50%;
+    z-index: 7;
+}
+.displayBlockOnly {
+    display: block;
+}
+
+
+.catNameTag {
+    font-weight: 600;
+    letter-spacing: 2px;
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    border-radius: 10px;
+    z-index: 6;
+    padding: 2px 10px;
+    background-color: lightgrey;
+    opacity: 0.8; 
+}
+
+
+@keyframes slideDown {
+    0% {
+        transform: translateY(0px);
+    }
+    100% {
+        transform: translateY(100%);
+    }
+}@keyframes slideUp {
+    0% {
+        transform: translateY(100%);
+    }
+    100% {
+        transform: translateY(0px);
+    }
+}
+.slide_down {
+    animation-duration: 0.5s;
+    animation-name: slideDown;
+    animation-fill-mode: forwards;
+    animation-timing-function: ease-in-out;
+}.slide_up {
+    animation-duration: 0.5s;
+    animation-name: slideUp;
+    animation-fill-mode: backwards;
+    animation-timing-function: ease-in-out;
+}
+
+@media screen and (min-width: 600px) {
+    /* .navBar {
+        display: flex;
+        /* position: relative; 
+    } */
+    .ham-menu, .x-menu {
+        display: none;
+    }
+    .navBarMenuItems1, .navBarMenuItems2, .navBarMenuItems3 {
+        display: none;
+        background-color: beige;
+        position: absolute;
+        transform: translate(0%, 0%);
+        list-style-type: disc;
+        top: 50px;
+        right: -4%;
+        width: 100vw;
+        height: 250px;
+        padding: 30px 10px 0px 60px;
+        line-height: 2;
+        font-weight: 400;
+        font-size: 110%;
+    }
+    .navBarMenuUL {
+        background-color: none;
+        display: flex;
+        flex-flow: row nowrap;
+        justify-content: center;
+        align-items: center;
+        position: relative; 
+        top: 0%;
+        right: 0%; 
+        height: auto;
+        width: auto;
+        overflow: visible;
+
+        background-color: beige;
+        gap: 50px;
+        padding: 0px 20px 0px 0px;
+        /* padding: 70px 10px 0px 30px; */
+        /* font-weight: 400;
+        font-size: 100%; */
+        /* line-height: 2; */
+        transition: 0s;
+    }
+    .sigma {
+        display: flex;
+        height: 25px;
+        width: auto;
+        gap: 5px;
+        margin-bottom: 20px;
+    }
+    .catImgContainer {
+        opacity: 0.9;
+    }
+    .closeBtn {
+        display: block;
+        width: 60px;
+        position: absolute;
+        transform: translate(-50%, -50%);
+        bottom: 0%;
+        right: 0%;
+        cursor: pointer;
+    }
+    
+}
