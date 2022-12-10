@@ -47,6 +47,8 @@ async function getCats() {
     nameGlobal = n.textContent; describeGlobal = n.getAttribute("descr"); imgurlGlobal = n.getAttribute("imgURL");
 
     setY = document.documentElement.scrollTop;
+    console.log(setY)
+
     catAllContainer.classList.add("freezeScroll")
     // catAllContainer.scro
     // console.log(n.getAttribute("imgURL"));
@@ -196,11 +198,11 @@ window.addEventListener("load", async() => {
   isPortrait.matches ? (myScrOrientation = "Portrait") : (myScrOrientation = "Landscape");
   isPortrait.addEventListener("change", function(e) {
     initNavBar();
-    if(e.matches && isInfoBoxPresent) { //portrait mode + infobox open
+    if(e.matches && isInfoBoxPresent) { //to portrait mode + infobox open
       console.log("isPortrait ?", e.matches)
       myScrOrientation = "Portrait"
-      infoBoxPortraitScr(nameGlobal, describeGlobal, imgurlGlobal)    
-    } else if (!e.matches && isInfoBoxPresent) {  //landscape mode + infobox open
+      infoBoxPortraitScr(nameGlobal, describeGlobal, imgurlGlobal)  
+    } else if (!e.matches && isInfoBoxPresent) {  // to landscape mode + infobox open
       infoBoxLandscapeScr(nameGlobal, describeGlobal, imgurlGlobal)
       console.log("isPortrait ?", e.matches) 
       myScrOrientation = "Landscape"
@@ -223,7 +225,7 @@ function removeChildNodes (x) {
 /* belows are for nav bar */
 window.addEventListener ("scroll", function() {
   // console.log(catAllContainer.documentElement.scrollTop)
-  console.log("scrollTop:", document.documentElement.scrollTop, " scrollLeft:",document.documentElement.scrollLeft)
+  // console.log("scrollTop:", document.documentElement.scrollTop, " scrollLeft:",document.documentElement.scrollLeft)
 })
 
 document.body.addEventListener ("wheel", function(e) {
@@ -310,7 +312,4 @@ function initNavBar() {
   slideInMenu.classList.remove("slideToLeft")
   infoBoxBackground.classList.remove("displayBlockOnly")
   document.querySelector(".catAllContainer").classList.remove("freezeScroll")
-}
-function lockScroll_GetPageY () {
-
 }

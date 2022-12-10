@@ -111,6 +111,7 @@ body {
 .items3  {
     display: flex;
     flex-flow: row wrap;
+    align-items: center; 
     justify-content: space-evenly;
     padding: 0px 0px 180px 10px;
     gap: 10px;
@@ -121,6 +122,10 @@ body {
 }
 .sigma {
     display: flex;
+    flex-flow: row nowrap;
+    justify-content: center;
+    align-items: center; 
+    width: auto;
     height: 30px;
     gap: 5px;
 }
@@ -162,7 +167,7 @@ body {
     position: fixed;
     display: flex;
     flex-direction: row;
-    justify-content: space-evenly;
+    justify-content: center;
     align-items: center;
     list-style-type: none;
     background-color: beige;
@@ -180,9 +185,7 @@ body {
 }
 .catInfoBoxToggle{
     z-index: 8;
-    /* width: 95%; */
-    /* height: 85vh; */
-    padding: 10px 0px 10px 10px;
+    padding: 10px 0px 20px 10px;
     opacity: 1;
 }
 .infoBoxImgDiv { /* for portrait view */
@@ -196,7 +199,7 @@ body {
 }
 .infoBoxUL {
     /* width: auto; */
-    max-height: 90%;
+    max-height: 35%;
     width: auto;
     overflow: auto;
     list-style-type: none;
@@ -207,7 +210,8 @@ h4 {
     font-size: 18px;
     font-weight: 400;
     padding: 0px 10px 0px 10px;
-    line-height: 2;
+    line-height: 1.7;
+    overflow: auto;
     /* width: auto; */
 }
 h1 {
@@ -323,10 +327,12 @@ h1 {
         height: 25px;
         width: auto;
         gap: 5px;
-        margin-bottom: 20px;
     }
     .catImgContainer {
         opacity: 0.9;
+    }
+    .infoBoxUL {
+        max-height: 90%;
     }
     .infoBoxImg {
         width: 100%;
