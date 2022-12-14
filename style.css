@@ -248,7 +248,22 @@ h1 {
     background-color: lightgrey;
     opacity: 0.8; 
 }
-
+.tapIcon {
+    width: 40px;
+    height: 40px;
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
+    z-index: 6;
+}
+.tapIconNoImg {
+    width: 40px;
+    height: 40px;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    z-index: 6;
+}
 
 @keyframes slideDown {
     0% {

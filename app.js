@@ -30,6 +30,7 @@ let nameGlobal = ""; describeGlobal = ""; imgurlGlobal = "";
 const ENDPOINT = "https://api.thecatapi.com/v1/breeds"
 let isInfoBoxPresent = false;
 let setY = 0;
+let offsetTopPortrait = 0; offsetTopLandscape = 0;
 
 // fetch API and pops info box when clicked
 async function getCats() {
@@ -40,17 +41,18 @@ async function getCats() {
   data.forEach((catObj, ind) => {
     constructCatAlbum (data[ind].name, data[ind].image?.url, data[ind].description)
   });
-
   // pops catbox when clicked
   document.querySelectorAll(".catImgContainer").forEach(n => n.addEventListener("click", () => {
     isInfoBoxPresent = true;
     nameGlobal = n.textContent; describeGlobal = n.getAttribute("descr"); imgurlGlobal = n.getAttribute("imgURL");
 
     setY = document.documentElement.scrollTop;
-    console.log(setY)
-
+    console.log(n)
+    console.log("index clicked :", [...catAllContainer.children].indexOf(n))
+    // console.log(n.offsetWidth, n.offsetHeight)
+    // console.log(n.offsetTop)
+  
     catAllContainer.classList.add("freezeScroll")
-    // catAllContainer.scro
     // console.log(n.getAttribute("imgURL"));
     // console.log(catImgContainer)
     if(myScrOrientation === "Portrait") {
@@ -61,22 +63,18 @@ async function getCats() {
     } else {
       navBar.classList.remove("slide_down");
       navBar.classList.add("slide_up");
-    
       // console.log("DESKTOP")
       infoBoxLandscapeScr(n.textContent, n.getAttribute("descr"), n.getAttribute("imgURL"))
     }
-  
-    // console.log(n)
-
     catInfoBox.classList.add("catInfoBoxToggle")
     infoBoxBackground.classList.add("displayBlockOnly")  
-    // console.log(screen.availWidth)  
   }))
 }
+
+
 /* prepare landing page */
 function constructCatAlbum (catName, isImgAvailable, catDescription) {
   let noImgURL = "./imgNotAvailable.png"
-
   if (isImgAvailable == undefined) {
       let new_catImgContainer = document.createElement("section");
       new_catImgContainer.setAttribute("class", "catImgContainer");
@@ -90,7 +88,13 @@ function constructCatAlbum (catName, isImgAvailable, catDescription) {
       catNameTag.setAttribute("class", "catNameTag");
       catNameTag.innerHTML = catName  + " " + "(Image not available)";
       new_catImgContainer.append(catNameTag);
-      catAllContainer.append(new_catImgContainer)
+      catAllContainer.append(new_catImgContainer);
+
+      let tapIcon = document.createElement("img");
+      tapIcon.setAttribute("class", "tapIconNoImg");
+      tapIcon.setAttribute("src", "tapNoImg.png");
+      new_catImgContainer.append(tapIcon);
+      catAllContainer.append(new_catImgContainer);
   } else {
       var catImgURL = isImgAvailable.toString();
       let new_catImgContainer = document.createElement("section");
@@ -105,7 +109,14 @@ function constructCatAlbum (catName, isImgAvailable, catDescription) {
       catNameTag.setAttribute("class", "catNameTag");
       catNameTag.innerHTML = catName;
       new_catImgContainer.append(catNameTag);
-      catAllContainer.append(new_catImgContainer)
+      catAllContainer.append(new_catImgContainer);
+
+      let tapIcon = document.createElement("img");
+      tapIcon.setAttribute("class", "tapIcon");
+      tapIcon.setAttribute("src", "tap.png");
+      new_catImgContainer.append(tapIcon);
+      catAllContainer.append(new_catImgContainer);
+
   }
 }
 function infoBoxLandscapeScr(name, describe, imgURL) {
@@ -186,46 +197,46 @@ catInfoBox.addEventListener("click", () => {
 
 // maintaining knowledge of screen orientation
 window.addEventListener("load", async() => {
-  x = catInfoBox.childNodes.length
-  removeChildNodes(x);
 
-  let isPortrait = window.matchMedia("(orientation: portrait)");
   const data = await getCats();
   navBar.classList.add("slide_down");
   navBar.classList.remove("slide_up");
-  
-    // reconstruct infobox when screen rotated while infobox presently open
+
+  let isPortrait = window.matchMedia("(orientation: portrait)");
   isPortrait.matches ? (myScrOrientation = "Portrait") : (myScrOrientation = "Landscape");
+
+    // reconstruct infobox when screen rotated while infobox presently open
   isPortrait.addEventListener("change", function(e) {
     initNavBar();
-    if(e.matches && isInfoBoxPresent) { //to portrait mode + infobox open
-      console.log("isPortrait ?", e.matches)
-      myScrOrientation = "Portrait"
-      infoBoxPortraitScr(nameGlobal, describeGlobal, imgurlGlobal)  
-    } else if (!e.matches && isInfoBoxPresent) {  // to landscape mode + infobox open
-      infoBoxLandscapeScr(nameGlobal, describeGlobal, imgurlGlobal)
-      console.log("isPortrait ?", e.matches) 
-      myScrOrientation = "Landscape"
-    } else if (e.matches && !isInfoBoxPresent) {
-      myScrOrientation = "Portrait"
-      // console.log("infobox not present while screen rotated")
-    } else {
-      myScrOrientation = "Landscape"
+
+    if(e.matches && isInfoBoxPresent) {           //to portrait mode + infobox presence
+        console.log("isPortrait ?", e.matches)
+        myScrOrientation = "Portrait"
+        infoBoxPortraitScr(nameGlobal, describeGlobal, imgurlGlobal)  
+    } else if (!e.matches && isInfoBoxPresent) {  // to landscape mode + infobox presence
+        infoBoxLandscapeScr(nameGlobal, describeGlobal, imgurlGlobal)
+        console.log("isPortrait ?", e.matches) 
+        myScrOrientation = "Landscape"
+    } else if (e.matches && !isInfoBoxPresent) {  // to portrait mode - infobox presence
+        myScrOrientation = "Portrait"
+    } else {                                      // to landscape mode - infobox presence
+        myScrOrientation = "Landscape"
     }
   })
 })
 
 function removeChildNodes (x) {
   for(i=0; i < x ; i++) {
-    console.log(i, catInfoBox.childNodes.length)
+    // console.log(i, catInfoBox.childNodes.length)
     catInfoBox.removeChild(catInfoBox.childNodes[0]);
-    console.log(i, catInfoBox.childNodes.length)
+    // console.log(i, catInfoBox.childNodes.length)
   }
 }
 /* belows are for nav bar */
 window.addEventListener ("scroll", function() {
-  // console.log(catAllContainer.documentElement.scrollTop)
-  // console.log("scrollTop:", document.documentElement.scrollTop, " scrollLeft:",document.documentElement.scrollLeft)
+  // console.log("scrollTop:", document.documentElement.scrollTop)
+  // console.log("ratio", catAllContainer.offsetWidth / catAllContainer.offsetHeight)
+  // console.log("ratio", catAllContainer.offsetHeight / catAllContainer.offsetWidth)
 })
 
 document.body.addEventListener ("wheel", function(e) {
