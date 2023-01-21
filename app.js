@@ -27,7 +27,8 @@ let catInfoBoxToggle = document.querySelector(".catInfoBoxToggle")
 let displayBlockOnly = document.querySelector(".displayBlockOnly")
 let myScrOrientation = "";
 let nameGlobal = ""; describeGlobal = ""; imgurlGlobal = "";
-const ENDPOINT = "https://api.thecatapi.com/v1/breeds"
+const ENDPOINT = "https://gist.githubusercontent.com/zulfidly/c8378f290a8a80b2ba938624baece894/raw/3e6731b31b69c958dd459e076b36aea7afd998e6/catstagram"
+// const ENDPOINT = "./cat-JSON/cat2.json"
 let isInfoBoxPresent = false;
 let setY = 0;
 let offsetTopPortrait = 0; offsetTopLandscape = 0;
@@ -50,7 +51,8 @@ async function getCats() {
     console.log(n)
     console.log("index clicked :", [...catAllContainer.children].indexOf(n))
     // console.log(n.offsetWidth, n.offsetHeight)
-    // console.log(n.offsetTop)
+    // console.log(n.offsetTop, '***', catAllContainer.offsetHeight)
+    
   
     catAllContainer.classList.add("freezeScroll")
     // console.log(n.getAttribute("imgURL"));
@@ -104,7 +106,7 @@ function constructCatAlbum (catName, isImgAvailable, catDescription) {
       new_catImgContainer.setAttribute("imgURL", catImgURL);
 
       new_catImgContainer.style.backgroundImage = `url(${catImgURL})`;
-
+      // console.log(fetch(catImgURL, 'no-cors'))
       let catNameTag = document.createElement("p");
       catNameTag.setAttribute("class", "catNameTag");
       catNameTag.innerHTML = catName;
@@ -197,10 +199,10 @@ catInfoBox.addEventListener("click", () => {
 
 // maintaining knowledge of screen orientation
 window.addEventListener("load", async() => {
-
   const data = await getCats();
   navBar.classList.add("slide_down");
   navBar.classList.remove("slide_up");
+  fitOutScrDisp()
 
   let isPortrait = window.matchMedia("(orientation: portrait)");
   isPortrait.matches ? (myScrOrientation = "Portrait") : (myScrOrientation = "Landscape");
@@ -208,7 +210,7 @@ window.addEventListener("load", async() => {
     // reconstruct infobox when screen rotated while infobox presently open
   isPortrait.addEventListener("change", function(e) {
     initNavBar();
-
+    fitOutScrDisp()
     if(e.matches && isInfoBoxPresent) {           //to portrait mode + infobox presence
         console.log("isPortrait ?", e.matches)
         myScrOrientation = "Portrait"
@@ -219,9 +221,12 @@ window.addEventListener("load", async() => {
         myScrOrientation = "Landscape"
     } else if (e.matches && !isInfoBoxPresent) {  // to portrait mode - infobox presence
         myScrOrientation = "Portrait"
+          console.log("SCROLLTOP: ",document.documentElement.scrollTop)
+          fitOutScrDisp()
     } else {                                      // to landscape mode - infobox presence
         myScrOrientation = "Landscape"
-    }
+        console.log("SCROLLTOP: ",document.documentElement.scrollTop)
+        fitOutScrDisp()}
   })
 })
 
@@ -235,6 +240,7 @@ function removeChildNodes (x) {
 /* belows are for nav bar */
 window.addEventListener ("scroll", function() {
   // console.log("scrollTop:", document.documentElement.scrollTop)
+  // console.log("scrollTop:", catAllContainer.children[66].scrollTop)
   // console.log("ratio", catAllContainer.offsetWidth / catAllContainer.offsetHeight)
   // console.log("ratio", catAllContainer.offsetHeight / catAllContainer.offsetWidth)
 })
@@ -323,4 +329,24 @@ function initNavBar() {
   slideInMenu.classList.remove("slideToLeft")
   infoBoxBackground.classList.remove("displayBlockOnly")
   document.querySelector(".catAllContainer").classList.remove("freezeScroll")
+}
+function fitOutScrDisp() {
+  numOfColumns = Math.trunc(catAllContainer.offsetWidth / document.querySelector(".catImgContainer").offsetWidth);
+  numOfRows = Math.ceil(catAllContainer.children.length / numOfColumns);
+
+  let x = document.querySelector(".catImgContainer").offsetHeight * numOfColumns
+  // console.log("R x C : ", numOfRows, numOfColumns ,x)
+
+  let dispRatio = catAllContainer.offsetWidth / catAllContainer.offsetHeight;
+// console.log(catAllContainer.offsetWidth, catAllContainer.offsetHeight)
+  let y = document.documentElement.scrollTop
+  // console.log("scrollTop: ", y)
+  if(myScrOrientation == "Portrait") {
+    y = y / dispRatio * numOfColumns
+    // console.log("toPortrait: ", y)
+  } else if (myScrOrientation == "Landscape") {
+    let q = document.querySelector(".catImgContainer").offsetWidth / numOfColumns
+    y = y * 2;
+    // console.log("toLandscape: ", y)
+  }
 }
